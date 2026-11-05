@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Open Basket | Art Gallery & Studio</title>
+    <style>
+        /* 全局基础设置 */
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; background-color: #faf9f6; color: #2b2b2b; line-height: 1.6; }
+        
+        /* 品牌 Header 区域 */
+        header { text-align: center; padding: 60px 20px 40px; background-color: #fff; border-bottom: 1px solid #eee; }
+        .brand-title { font-size: 2.5rem; font-weight: 300; letter-spacing: 4px; text-transform: uppercase; color: #1a1a1a; margin-bottom: 8px; }
+        .brand-tagline { font-size: 0.95rem; letter-spacing: 2px; color: #8c8c8c; text-transform: uppercase; font-weight: 400; }
+        .brand-desc { max-width: 600px; margin: 20px auto 0; color: #666; font-size: 0.95rem; line-height: 1.8; }
+
+        /* 画板网格布局 */
+        .container { max-width: 1200px; margin: 50px auto; padding: 0 20px; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 35px; }
+        
+        /* 作品卡片样式 */
+        .card { background: #fff; border-radius: 6px; overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.04); transition: transform 0.3s ease, box-shadow 0.3s ease; position: relative; border: 1px solid #f0f0f0; }
+        .card:hover { transform: translateY(-6px); box-shadow: 0 10px 25px rgba(0,0,0,0.08); }
+        .card-img-wrap { width: 100%; height: 280px; overflow: hidden; background: #f7f7f7; }
+        .card-img-wrap img { width: 100%; height: 100%; object-fit: cover; }
+        
+        /* 标签与状态 */
+        .badge { position: absolute; top: 15px; right: 15px; padding: 5px 12px; border-radius: 20px; font-size: 0.75rem; font-weight: 600; letter-spacing: 1px; color: #fff; text-transform: uppercase; }
+        .badge.available { background-color: #27ae60; }
+        .badge.sold { background-color: #95a5a6; }
+        
+        /* 作品文字说明 */
+        .card-info { padding: 22px; }
+        .card-title { font-size: 1.25rem; font-weight: 500; margin-bottom: 6px; color: #111; }
+        .card-meta { font-size: 0.85rem; color: #777; margin-bottom: 12px; }
+        .card-price { font-size: 1.15rem; font-weight: 600; color: #d35400; margin-bottom: 18px; }
+        
+        /* WhatsApp 询价按钮 */
+        .btn-chat { display: block; width: 100%; text-align: center; background-color: #25D366; color: white; padding: 12px; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 0.9rem; transition: background 0.3s; }
+        .btn-chat:hover { background-color: #1ea851; }
+        
+        /* 页脚 */
+        footer { text-align: center; padding: 50px 20px; color: #aaa; font-size: 0.85rem; border-top: 1px solid #eee; margin-top: 8px; }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1 class="brand-title">The Open Basket</h1>
+        <div class="brand-tagline">Art Gallery & Creative Studio</div>
+        <p class="brand-desc">欢迎来到 The Open Basket。这里收录了手绘水彩、风景与生活灵感画作，每一幅都是独一无二的原稿创想。欢迎浏览咨询或预约定制。</p>
+    </header>
+
+    <div class="container">
+        <div class="grid">
+            
+            <!-- 画作 1 (在售示例) -->
+            <div class="card">
+                <span class="badge available">在售</span>
+                <div class="card-img-wrap">
+                    <img src="https://images.unsplash.com/photo-1579783902614-a3fb3927b675?w=500" alt="画作名称">
+                </div>
+                <div class="card-info">
+                    <h3 class="card-title">《雨后巷口》</h3>
+                    <p class="card-meta">尺寸: 30 × 40 cm | 水彩原画 (含原木框)</p>
+                    <p class="card-price">RM 280 / ¥450</p>
+                    <a href="https://wa.me/60123456789?text=你好！我在 The Open Basket 网站看到了画作《雨后巷口》，想询价与购买。" target="_blank" class="btn-chat">💬 询价 / WhatsApp 联系</a>
+                </div>
+            </div>
+
+            <!-- 画作 2 (已售出示例) -->
+            <div class="card">
+                <span class="badge sold">已售 (可定制)</span>
+                <div class="card-img-wrap">
+                    <img src="https://images.unsplash.com/photo-1579783900882-c0d3dad7b119?w=500" alt="画作名称">
+                </div>
+                <div class="card-info">
+                    <h3 class="card-title">《日落海岸》</h3>
+                    <p class="card-meta">尺寸: 40 × 50 cm | 油画原画</p>
+                    <p class="card-price">已售出 (接受同款预约)</p>
+                    <a href="https://wa.me/60123456789?text=你好！我在 The Open Basket 看到《日落海岸》，想预约同款风格定制。" target="_blank" class="btn-chat">💬 预约同款定制</a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <footer>
+        <p>© 2026 The Open Basket. All rights reserved. 保留所有原画作品版权。</p>
+    </footer>
+
+</body>
+</html>
