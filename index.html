@@ -1,94 +1,210 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Open Basket | Art Gallery & Studio</title>
+    <title>The Open Basket | Art Gallery</title>
+    <!-- 引入优雅的衬线字体 Playfair Display -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
+    
     <style>
         /* 全局基础设置 */
         * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; background-color: #faf9f6; color: #2b2b2b; line-height: 1.6; }
+        body { font-family: 'Poppins', sans-serif; background-color: #fcfbf9; color: #2c2c2c; line-height: 1.6; }
         
-        /* 品牌 Header 区域 */
-        header { text-align: center; padding: 60px 20px 40px; background-color: #fff; border-bottom: 1px solid #eee; }
-        .brand-title { font-size: 2.5rem; font-weight: 300; letter-spacing: 4px; text-transform: uppercase; color: #1a1a1a; margin-bottom: 8px; }
-        .brand-tagline { font-size: 0.95rem; letter-spacing: 2px; color: #8c8c8c; text-transform: uppercase; font-weight: 400; }
-        .brand-desc { max-width: 600px; margin: 20px auto 0; color: #666; font-size: 0.95rem; line-height: 1.8; }
+        /* 1. 顶栏 Search & Language (参考参考图样式) */
+        .top-bar { display: flex; justify-content: space-between; align-items: center; padding: 15px 5%; background: #fff; font-size: 0.85rem; border-bottom: 1px solid #f0ede8; }
+        .search-box input { border: 1px solid #e0dcd5; padding: 6px 12px; border-radius: 4px; font-size: 0.8rem; outline: none; background: #faf9f6; }
+        
+        /* 2. 品牌 Logo 与顶部导航栏 (参考 Belóved 风格) */
+        header { text-align: center; background-color: #fff; padding-top: 25px; }
+        .brand-logo { font-family: 'Playfair Display', serif; font-size: 2.8rem; font-weight: 400; letter-spacing: 6px; text-transform: uppercase; color: #1a1a1a; text-decoration: none; display: inline-block; }
+        
+        .main-nav { display: flex; justify-content: center; gap: 35px; padding: 25px 0 20px; list-style: none; border-bottom: 1px solid #f0ede8; }
+        .main-nav a { text-decoration: none; color: #555; font-size: 0.85rem; letter-spacing: 2px; text-transform: uppercase; transition: color 0.3s; }
+        .main-nav a:hover, .main-nav a.active { color: #8c7355; font-weight: 500; }
 
-        /* 画板网格布局 */
-        .container { max-width: 1200px; margin: 50px auto; padding: 0 20px; }
-        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 35px; }
+        /* 3. Hero 全屏大 Banner 区域 (参考参考图风格) */
+        .hero { position: relative; height: 60vh; min-height: 400px; background: linear-gradient(rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0.35)), url('https://images.unsplash.com/photo-1579783900882-c0d3dad7b119?w=1600') center/cover no-repeat; display: flex; align-items: center; justify-content: center; text-align: center; color: #fff; }
+        .hero-content { max-width: 800px; padding: 0 20px; }
+        .hero-title { font-family: 'Playfair Display', serif; font-size: 3.5rem; font-weight: 400; letter-spacing: 2px; margin-bottom: 15px; }
+        .hero-subtitle { font-size: 1.1rem; letter-spacing: 3px; font-weight: 300; text-transform: uppercase; margin-bottom: 25px; opacity: 0.9; }
+        .btn-hero { display: inline-block; padding: 12px 30px; border: 1px solid #fff; color: #fff; text-decoration: none; font-size: 0.85rem; letter-spacing: 2px; text-transform: uppercase; transition: all 0.3s; background: rgba(255,255,255,0.1); }
+        .btn-hero:hover { background: #fff; color: #1a1a1a; }
+
+        /* 4. 分类筛选按钮 (Oil, Watercolor, Ink, Others) */
+        .category-section { text-align: center; padding: 60px 20px 30px; }
+        .section-title { font-family: 'Playfair Display', serif; font-size: 2.2rem; font-weight: 400; margin-bottom: 25px; color: #1a1a1a; }
         
-        /* 作品卡片样式 */
-        .card { background: #fff; border-radius: 6px; overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.04); transition: transform 0.3s ease, box-shadow 0.3s ease; position: relative; border: 1px solid #f0f0f0; }
-        .card:hover { transform: translateY(-6px); box-shadow: 0 10px 25px rgba(0,0,0,0.08); }
-        .card-img-wrap { width: 100%; height: 280px; overflow: hidden; background: #f7f7f7; }
-        .card-img-wrap img { width: 100%; height: 100%; object-fit: cover; }
+        .filter-buttons { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; margin-bottom: 40px; }
+        .filter-btn { background: transparent; border: 1px solid #d5cfc5; padding: 8px 22px; border-radius: 30px; font-size: 0.85rem; letter-spacing: 1px; color: #555; cursor: pointer; transition: all 0.3s; }
+        .filter-btn:hover, .filter-btn.active { background: #8c7355; color: #fff; border-color: #8c7355; }
+
+        /* 5. 画作展示网格 */
+        .container { max-width: 1200px; margin: 0 auto 80px; padding: 0 20px; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 40px; }
         
-        /* 标签与状态 */
-        .badge { position: absolute; top: 15px; right: 15px; padding: 5px 12px; border-radius: 20px; font-size: 0.75rem; font-weight: 600; letter-spacing: 1px; color: #fff; text-transform: uppercase; }
-        .badge.available { background-color: #27ae60; }
-        .badge.sold { background-color: #95a5a6; }
+        .card { background: #fff; border-radius: 4px; overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.03); transition: transform 0.4s ease, box-shadow 0.4s ease; border: 1px solid #f2efea; position: relative; }
+        .card:hover { transform: translateY(-8px); box-shadow: 0 12px 30px rgba(0,0,0,0.08); }
         
-        /* 作品文字说明 */
-        .card-info { padding: 22px; }
-        .card-title { font-size: 1.25rem; font-weight: 500; margin-bottom: 6px; color: #111; }
-        .card-meta { font-size: 0.85rem; color: #777; margin-bottom: 12px; }
-        .card-price { font-size: 1.15rem; font-weight: 600; color: #d35400; margin-bottom: 18px; }
+        .card-img-wrap { width: 100%; height: 320px; overflow: hidden; background: #f9f8f6; }
+        .card-img-wrap img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease; }
+        .card:hover .card-img-wrap img { transform: scale(1.05); }
         
-        /* WhatsApp 询价按钮 */
-        .btn-chat { display: block; width: 100%; text-align: center; background-color: #25D366; color: white; padding: 12px; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 0.9rem; transition: background 0.3s; }
+        .badge { position: absolute; top: 15px; right: 15px; padding: 4px 10px; border-radius: 20px; font-size: 0.7rem; font-weight: 600; letter-spacing: 1px; color: #fff; text-transform: uppercase; }
+        .badge.available { background-color: #4a7c59; }
+        .badge.sold { background-color: #999; }
+        
+        .card-info { padding: 25px; text-align: center; }
+        .card-category-tag { font-size: 0.75rem; letter-spacing: 2px; text-transform: uppercase; color: #8c7355; margin-bottom: 5px; }
+        .card-title { font-family: 'Playfair Display', serif; font-size: 1.35rem; font-weight: 400; margin-bottom: 8px; color: #1a1a1a; }
+        .card-meta { font-size: 0.8rem; color: #777; margin-bottom: 12px; }
+        .card-price { font-size: 1.1rem; font-weight: 500; color: #2c2c2c; margin-bottom: 20px; }
+        
+        .btn-chat { display: inline-block; width: 100%; text-align: center; background-color: #25D366; color: white; padding: 11px; border-radius: 4px; text-decoration: none; font-weight: 500; font-size: 0.85rem; letter-spacing: 1px; transition: background 0.3s; }
         .btn-chat:hover { background-color: #1ea851; }
         
         /* 页脚 */
-        footer { text-align: center; padding: 50px 20px; color: #aaa; font-size: 0.85rem; border-top: 1px solid #eee; margin-top: 8px; }
+        footer { text-align: center; padding: 60px 20px; color: #888; font-size: 0.85rem; border-top: 1px solid #f0ede8; background: #fff; }
+        footer p { margin-bottom: 10px; }
     </style>
 </head>
 <body>
 
+    <!-- 顶部辅助栏 (参考图片左上方风格) -->
+    <div class="top-bar">
+        <div class="search-box">
+            <input type="text" placeholder="Search artwork...">
+        </div>
+        <div>
+            <span>English ▾</span>
+        </div>
+    </div>
+
+    <!-- 品牌 Header 与导航栏 -->
     <header>
-        <h1 class="brand-title">The Open Basket</h1>
-        <div class="brand-tagline">Art Gallery & Creative Studio</div>
-        <p class="brand-desc">欢迎来到 The Open Basket。这里收录了手绘水彩、风景与生活灵感画作，每一幅都是独一无二的原稿创想。欢迎浏览咨询或预约定制。</p>
+        <a href="#" class="brand-logo">The Open Basket</a>
+        <ul class="main-nav">
+            <li><a href="#" class="active">Gallery</a></li>
+            <li><a href="#artworks">Artworks</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
     </header>
 
+    <!-- Banner 展厅区域 (参考参考图全屏大气视觉) -->
+    <section class="hero">
+        <div class="hero-content">
+            <div class="hero-subtitle">Welcome to</div>
+            <h1 class="hero-title">The Open Basket Gallery</h1>
+            <a href="#artworks" class="btn-hero">Explore Collection</a>
+        </div>
+    </section>
+
+    <!-- 画作分类与筛选区域 -->
+    <section class="category-section" id="artworks">
+        <h2 class="section-title">Art Collections</h2>
+        
+        <!-- 4大分类切换按钮 -->
+        <div class="filter-buttons">
+            <button class="filter-btn active" onclick="filterArt('all')">All Works</button>
+            <button class="filter-btn" onclick="filterArt('oil')">油画 Oil Painting</button>
+            <button class="filter-btn" onclick="filterArt('watercolor')">水彩画 Watercolor</button>
+            <button class="filter-btn" onclick="filterArt('ink')">水墨画 Ink Painting</button>
+            <button class="filter-btn" onclick="filterArt('others')">其它 Others</button>
+        </div>
+    </section>
+
+    <!-- 画作展示列表 -->
     <div class="container">
         <div class="grid">
             
-            <!-- 画作 1 (在售示例) -->
-            <div class="card">
-                <span class="badge available">在售</span>
+            <!-- 示例 1: 油画 Oil Painting -->
+            <div class="card art-item oil">
+                <span class="badge available">Available</span>
                 <div class="card-img-wrap">
-                    <img src="https://images.unsplash.com/photo-1579783902614-a3fb3927b675?w=500" alt="画作名称">
+                    <img src="https://images.unsplash.com/photo-1579783900882-c0d3dad7b119?w=600" alt="Oil Painting">
                 </div>
                 <div class="card-info">
-                    <h3 class="card-title">《雨后巷口》</h3>
-                    <p class="card-meta">尺寸: 30 × 40 cm | 水彩原画 (含原木框)</p>
-                    <p class="card-price">RM 280 / ¥450</p>
-                    <a href="https://wa.me/60123456789?text=你好！我在 The Open Basket 网站看到了画作《雨后巷口》，想询价与购买。" target="_blank" class="btn-chat">💬 询价 / WhatsApp 联系</a>
+                    <div class="card-category-tag">Oil Painting</div>
+                    <h3 class="card-title">"Sunset Coast"</h3>
+                    <p class="card-meta">40 × 50 cm | Oil on Canvas</p>
+                    <p class="card-price">RM 450</p>
+                    <a href="https://wa.me/60129162856?text=Hi!%20I%20am%20interested%20in%20the%20Oil%20Painting%20%22Sunset%20Coast%22%20on%20The%20Open%20Basket." target="_blank" class="btn-chat">💬 Inquire via WhatsApp</a>
                 </div>
             </div>
 
-            <!-- 画作 2 (已售出示例) -->
-            <div class="card">
-                <span class="badge sold">已售 (可定制)</span>
+            <!-- 示例 2: 水彩画 Watercolor -->
+            <div class="card art-item watercolor">
+                <span class="badge available">Available</span>
                 <div class="card-img-wrap">
-                    <img src="https://images.unsplash.com/photo-1579783900882-c0d3dad7b119?w=500" alt="画作名称">
+                    <img src="https://images.unsplash.com/photo-1579783902614-a3fb3927b675?w=600" alt="Watercolor Painting">
                 </div>
                 <div class="card-info">
-                    <h3 class="card-title">《日落海岸》</h3>
-                    <p class="card-meta">尺寸: 40 × 50 cm | 油画原画</p>
-                    <p class="card-price">已售出 (接受同款预约)</p>
-                    <a href="https://wa.me/60123456789?text=你好！我在 The Open Basket 看到《日落海岸》，想预约同款风格定制。" target="_blank" class="btn-chat">💬 预约同款定制</a>
+                    <div class="card-category-tag">Watercolor</div>
+                    <h3 class="card-title">"After the Rain"</h3>
+                    <p class="card-meta">30 × 40 cm | Watercolor on 300g Paper</p>
+                    <p class="card-price">RM 280</p>
+                    <a href="https://wa.me/60129162856?text=Hi!%20I%20am%20interested%20in%20the%20Watercolor%20painting%20%22After%20the%20Rain%22%20on%20The%20Open%20Basket." target="_blank" class="btn-chat">💬 Inquire via WhatsApp</a>
+                </div>
+            </div>
+
+            <!-- 示例 3: 水墨画 Ink Painting -->
+            <div class="card art-item ink">
+                <span class="badge sold">Sold</span>
+                <div class="card-img-wrap">
+                    <img src="https://images.unsplash.com/photo-1541701494587-cb58502866ab?w=600" alt="Ink Painting">
+                </div>
+                <div class="card-info">
+                    <div class="card-category-tag">Ink Painting</div>
+                    <h3 class="card-title">"Mountain Mist"</h3>
+                    <p class="card-meta">50 × 70 cm | Traditional Chinese Ink</p>
+                    <p class="card-price">Sold (Commission Only)</p>
+                    <a href="https://wa.me/60129162856?text=Hi!%20I%20would%20like%20to%20request%20a%20custom%20Ink%20Painting%20similar%20to%20%22Mountain%20Mist%22." target="_blank" class="btn-chat">💬 Request Custom Order</a>
+                </div>
+            </div>
+
+            <!-- 示例 4: 其它 Others (例如手绘明信片、素描、混合介质) -->
+            <div class="card art-item others">
+                <span class="badge available">Available</span>
+                <div class="card-img-wrap">
+                    <img src="https://images.unsplash.com/photo-1513364776144-60967b0f800f?w=600" alt="Mixed Media">
+                </div>
+                <div class="card-info">
+                    <div class="card-category-tag">Others</div>
+                    <h3 class="card-title">"Botanical Sketches"</h3>
+                    <p class="card-meta">Set of 3 | Mixed Media / Postcards</p>
+                    <p class="card-price">RM 85</p>
+                    <a href="https://wa.me/60129162856?text=Hi!%20I%20am%20interested%20in%20the%20%22Botanical%20Sketches%22%20set%20on%20The%20Open%20Basket." target="_blank" class="btn-chat">💬 Inquire via WhatsApp</a>
                 </div>
             </div>
 
         </div>
     </div>
 
-    <footer>
-        <p>© 2026 The Open Basket. All rights reserved. 保留所有原画作品版权。</p>
+    <footer id="about">
+        <p>© 2026 The Open Basket Gallery. All rights reserved.</p>
+        <p style="font-size: 0.8rem; color: #aaa;">Handcrafted Paintings & Custom Art Commissions | WhatsApp: +60 12-916 2856</p>
     </footer>
 
+    <!-- 分类筛选 JavaScript 脚本 -->
+    <script>
+        function filterArt(category) {
+            // 改变按钮选中状态
+            const buttons = document.querySelectorAll('.filter-btn');
+            buttons.forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+
+            // 筛选画作
+            const items = document.querySelectorAll('.art-item');
+            items.forEach(item => {
+                if (category === 'all' || item.classList.contains(category)) {
+                    item.style.display = 'block';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        }
+    </script>
 </body>
 </html>
